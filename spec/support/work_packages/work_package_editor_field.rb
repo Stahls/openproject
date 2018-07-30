@@ -2,7 +2,7 @@ require_relative './work_package_field'
 
 class WorkPackageEditorField < WorkPackageField
   def input_selector
-    'div.op-ckeditor-wrapper'
+    '.ck-content'
   end
 
   def expect_save_button(enabled: true)
@@ -21,6 +21,24 @@ class WorkPackageEditorField < WorkPackageField
     submit_by_click
   end
 
+  def set_value(text)
+    textarea = field_container.find('.op-ckeditor-source-element', visible: :all)
+    page.execute_script(
+      'jQuery(arguments[0]).trigger("op:ckeditor:setData", arguments[1])',
+      textarea.native,
+      text
+    )
+  end
+
+
+  def clear
+    textarea = field_container.find('.op-ckeditor-source-element', visible: :all)
+    page.execute_script(
+      'jQuery(arguments[0]).trigger("op:ckeditor:clear")',
+      textarea.native
+    )
+  end
+
   def click_and_type_slowly(text)
     sleep 0.5
     input_element.click
@@ -29,6 +47,10 @@ class WorkPackageEditorField < WorkPackageField
     input_element.send_keys text
 
     sleep 0.5
+  end
+
+  def type(text)
+    click_and_type_slowly text
   end
 
   def submit_by_click

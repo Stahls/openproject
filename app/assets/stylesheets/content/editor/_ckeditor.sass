@@ -2,7 +2,6 @@
 // Wrapper for inline text editor
 .op-ckeditor-element
   min-height: 50px
-  border: 1px solid #bfbfbf !important
 
   &.ck-editor__editable_inline
     padding-left: 2px !important
@@ -15,16 +14,27 @@
     border: 1px solid #bfbfbf
     margin-bottom: 2rem
 
-  // Min height for the editable section
-  .ck-editor__editable
-    min-height: 20vh
+// Min height for the editable section
+.ck-editor__main
+  min-height: 20vh
 
-// Correct code style
-.ck-content pre
-  margin: 10px 0
+// Specific overrides for ck contenteditable
+.ck-content
 
-  code
-    display: block
+  // Code block
+  pre
+    margin: 10px 0
+
+    code
+      display: block
+
+  // Override central position of figure
+  figure.table
+    margin: 1em 0
+
+  // Don't make image full size
+  figure.image
+    display: inline-block
 
 .ck .ck-widget.op-ckeditor--code-block
   // Display content as pre
@@ -43,3 +53,10 @@
 .op-macro-list-button
   > .ck.ck-button
     text-align: left
+
+.ckeditor-type-balloon
+  margin-left: 25px
+
+.ck.ck-block-toolbar-button
+  transform: translateX( -15px )
+  z-index: 1000 !important
